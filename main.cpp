@@ -1,45 +1,53 @@
 #include <iostream>
-#define tam 13
 
 using namespace std;
 
-void imprimiVetor(int vtr[]) {
-	for (int i = 0; i < tam; i++){cout << vtr[i] << " - ";}
-}
-
-int somatorio(int vtr[], int &sum) {
-	for (int i = 0; i < 12; i++) { sum += vtr[i];}
-	return sum;
-}
-
 int main() {
 
-	//Declarações de variaveis
+    long long int CodigoBarra;
+    
+    int num_0,num_1,num_2,num_3,num_4,num_5,num_6,num_7,num_8,num_9,num_10,num_11,num_12,
+    somatorio,soma,dividir,multiplica,resta;
 
-	long long code, valor_inicial = 1000000000000;
-    int vtr[13],valor = 10, sum =0, multiplica =0, codigoVerificador =0 ;
+    cout<<"Digite seu Codigo de barra\n\tobs: Codigo de 13 digitos"<<endl;
+    cin >> CodigoBarra;
+    if(CodigoBarra> 1000000000000 && CodigoBarra < 9999999999999){
 
-	cout << "Digite seu codigo de barras de 13 digitos" << endl;
-	cin >> code;
+        num_0 = CodigoBarra/1000000000000;
+        num_1 = (CodigoBarra%1000000000000/100000000000) *3;
+        num_2 = CodigoBarra%100000000000/10000000000;
+        num_3 = (CodigoBarra%10000000000/1000000000) *3;
+        num_4 = CodigoBarra%1000000000/100000000;
+        num_5 = (CodigoBarra%100000000/10000000) *3;
+        num_6 = CodigoBarra%10000000/1000000;
+        num_7 = (CodigoBarra%1000000/100000) *3;
+        num_8 = CodigoBarra%100000/10000;
+        num_9 = (CodigoBarra%10000/1000) *3;
+        num_10 = CodigoBarra%1000/100;
+        num_11 = (CodigoBarra%100/10) *3;
+        num_12 = CodigoBarra%10;
 
-	if (code > 1000000000000 && code < 9999999999999) {
+        somatorio = num_0+num_1+num_2+num_3+num_4+num_5+num_6+num_7+num_8+num_9+num_10+num_11;
 
-		for (int i = 0; i < tam; i++) {
-			vtr[i] = (i % 2) != 0 && i < 12 ? (code / valor_inicial % valor) *3: code / valor_inicial % valor;
-			valor_inicial /= 10;
-		}
-	}
+        dividir = somatorio / 10;
 
-	sum = somatorio(vtr,sum);
+        soma = dividir + 1;
 
-	multiplica = ((sum / 10) + 1) *10;
+        multiplica = soma *  10;
 
-    codigoVerificador = multiplica - sum;
-	if(codigoVerificador != vtr[12]){
-        codigoVerificador %10==0 ? codigoVerificador =0: codigoVerificador;
-        cout << "Codigo verificador "<<vtr[12]<<" resulta inconsistente\n\t substitua por: "<<codigoVerificador;
-	}else{
-        cout << "Codigo verificador consistente";
-	}
-	return 0;
+        resta = multiplica - somatorio;
+
+        if(resta%10==0){
+            resta =0;
+        }
+
+        if(resta == num_12){
+            cout << "Codigo de Barra validado"<<endl;
+        }else{
+            cout << "Codigo de Barra invalido\n\t troque o digito verificador por {"<<resta<<"}";
+        }
+    } else{
+        cout << "Codigo de Barras com tamanho errado"<< endl;
+    }
+    return 0;
 }
